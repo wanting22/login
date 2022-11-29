@@ -1,4 +1,4 @@
-package main
+package auth
 
 import (
 	"errors"
@@ -14,12 +14,12 @@ func init() {
 	userdata["test"] = "sandy123"
 }
 
-func checkUserIsExist(username string) bool {
+func CheckUserIsExist(username string) bool {
 	_, exist := userdata[username]
 	return exist
 }
 
-func checkPassword(username string, password string) bool {
+func CheckPassword(username string, password string) bool {
 	if userdata[username] == password {
 		return true
 	} else {
@@ -27,19 +27,19 @@ func checkPassword(username string, password string) bool {
 	}
 }
 
-func auth(username string, password string) bool {
-	if exist := checkUserIsExist(username); exist {
-		return checkPassword(username, password)
+func Auth(username string, password string) bool {
+	if exist := CheckUserIsExist(username); exist {
+		return CheckPassword(username, password)
 	} else {
 		return false
 	}
 }
 
-func loginPage(c *gin.Context) {
+func LoginPage(c *gin.Context) {
 	c.HTML(http.StatusOK, "login.html", nil)
 }
 
-func loginAuth(c *gin.Context) {
+func LoginAuth(c *gin.Context) {
 	var (
 		username string
 		password string
@@ -56,7 +56,7 @@ func loginAuth(c *gin.Context) {
 		c.HTML(http.StatusBadRequest, "login.html", gin.H{"error": errors.New("請輸入密碼")})
 		return
 	}
-	if in := auth(username, password); in {
+	if in := Auth(username, password); in {
 		c.HTML(http.StatusOK, "login.html", gin.H{"success": "登入成功"})
 	} else {
 		c.HTML(http.StatusUnauthorized, "login.html", gin.H{"error": "err"})
