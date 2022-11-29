@@ -11,7 +11,7 @@ var userdata = make(map[string]string)
 
 // 在main之前執行
 func init() {
-	userdata["test"] = "sandy123"
+	userdata["test"] = "test"
 }
 
 func CheckUserIsExist(username string) bool {
@@ -59,7 +59,7 @@ func LoginAuth(c *gin.Context) {
 	if in := Auth(username, password); in {
 		c.HTML(http.StatusOK, "login.html", gin.H{"success": "登入成功"})
 	} else {
-		c.HTML(http.StatusUnauthorized, "login.html", gin.H{"error": "err"})
+		c.HTML(http.StatusUnauthorized, "login.html", gin.H{"error": "使用者名稱或密碼錯誤"})
 	}
 
 }
