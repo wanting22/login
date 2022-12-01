@@ -44,6 +44,7 @@ func LoginAuth(c *gin.Context) {
 		username string
 		password string
 	)
+
 	if in, exist := c.GetPostForm("username"); exist && in != "" {
 		username = in
 	} else {
